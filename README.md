@@ -13,10 +13,11 @@
 
 ## 修改详情
 - 添加Dockerfile
-- 考虑兼容性，降级至Django2.1.15
+- 考虑兼容性，降级至`Django2.1.15`
 - 优化settgins配置
 - 写文章自动保存作者，允许作者`author`字段为空
 - 初始化migrations文件
+- 允许分类`category`字段为空
 
 有任何问题欢迎提Issue。
 

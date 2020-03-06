@@ -76,7 +76,7 @@ class Article(BaseModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', blank=True, null=True,
                                on_delete=models.CASCADE)
     article_order = models.IntegerField('排序,数字越大越靠前', blank=False, null=False, default=0)
-    category = models.ForeignKey('Category', verbose_name='分类', on_delete=models.CASCADE, blank=False, null=False)
+    category = models.ForeignKey('Category', verbose_name='分类', on_delete=models.CASCADE, blank=True, null=True,)
     tags = models.ManyToManyField('Tag', verbose_name='标签集合', blank=True)
 
     def body_to_string(self):
