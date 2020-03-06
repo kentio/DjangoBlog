@@ -28,7 +28,7 @@ DEBUG = False if os.getenv('DEBUG') else True
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['*', '127.0.0.1', 'example.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.getenv("DOMAIN_NAME", "example.com")]
 # Application definition
 
 
@@ -94,19 +94,25 @@ WSGI_APPLICATION = 'DjangoBlog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE', 'djangoblog'),
-        'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
-        'HOST': os.environ.get('MYSQL_HOST'),
-        'PORT': int(os.environ.get('MYSQL_PORT', '3306')),
-        'OPTIONS': {'charset': 'utf8mb4'},
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('MYSQL_DATABASE', 'djangoblog'),
+            'USER': os.environ.get('MYSQL_USER'),
+            'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
+            'HOST': os.environ.get('MYSQL_HOST'),
+            'PORT': int(os.environ.get('MYSQL_PORT', '3306')),
+            'OPTIONS': {'charset': 'utf8mb4'},
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
