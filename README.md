@@ -18,6 +18,8 @@
 - 写文章自动保存作者，允许作者`author`字段为空
 - 初始化migrations文件
 - 允许分类`category`字段为空
+- 重构项目目录结构，App全部移至`apps`目录
+- 优化中间件`OnlineMiddleware`逻辑，规范中间件使用
 
 有任何问题欢迎提Issue。
 
