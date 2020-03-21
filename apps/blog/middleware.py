@@ -20,10 +20,14 @@ from .documents import ELASTICSEARCH_ENABLED, ElaspedTimeDocumentManager
 
 class OnlineMiddleware(MiddlewareMixin):
 
+    '''
+    https://docs.djangoproject.com/en/2.1/topics/http/middleware/
+    '''
 
-    def process_response(self, request, response):
-        ''' page load time '''
+    def __call__(self, request):
+        ''' page render time '''
         start_time = time.time()
+        response = self.get_response(request)
         http_user_agent = request.META.get('HTTP_USER_AGENT', '')
 
         if 'spider'.upper() not in http_user_agent.upper():
@@ -38,5 +42,6 @@ class OnlineMiddleware(MiddlewareMixin):
                                                       type='blog', useragent=http_user_agent)
                 response.content = response.content.replace(b'<!!LOAD_TIMES!!>', str.encode(str(cast_time)[:5]))
             except Exception as e:
-                print(e)
+                print("Error OnlineMiddleware: %s" % e)
+                raise e
         return response
